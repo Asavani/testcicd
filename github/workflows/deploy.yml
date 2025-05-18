@@ -7,7 +7,7 @@
     script: |
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      cd /home/ec2-user/my-app
+      cd /var/testcicd
       git pull origin main
       nvm use 23
       npm install
