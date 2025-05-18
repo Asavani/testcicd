@@ -30,12 +30,13 @@ jobs:
           nvm use 23
           npm ci
 
-      - name: Run background script
+      - name: Run background `run.sh` script
         run: |
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
           nvm use 23
-          nohup ./run.sh > /actions-runner/runner.log 2>&1 & # Run in the background
+          # Run the run.sh script in the background
+          nohup bash /home/ec2-user/actions-runner/run.sh > /dev/null 2>&1 &
 
       - name: Build (optional)
         run: |
