@@ -1,10 +1,13 @@
 script: |
-  echo "Deploying on EC2"
+  echo "🚀 Deploying on EC2"
   cd /var/testcicd || exit 1
+  echo "📥 Pulling latest code"
   git fetch origin
   git reset --hard origin/main
   git clean -fd
+  echo "📦 Installing dependencies"
   npm install
-  echo "Restarting PM2"
+  echo "♻️ Restarting PM2"
+  source ~/.bashrc
   pm2 list
-  pm2 restart 0
+  pm2 restart server
