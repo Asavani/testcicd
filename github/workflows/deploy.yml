@@ -3,7 +3,7 @@ name: Deploy and Restart EC2 App
 on:
   push:
     branches:
-      - main  # Or your deployment branch
+      - main
 
 jobs:
   deploy:
@@ -21,6 +21,8 @@ jobs:
         key: ${{ secrets.EC2_KEY }}
         script: |
           cd /var/testcicd
-          git pull origin main
-          npm update
+          git fetch origin
+          git reset --hard origin/main
+          git clean -fd
+          npm install
           pm2 restart all
