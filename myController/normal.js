@@ -4,6 +4,6 @@ router.get("/",async(req,res)=>{
     res.send({"status":2000,"msg":"Hello I am CI CD"});
 });
 router.get("/data",async(req,res)=>{
-    res.send({"status":2000,"msg":"Hello Data Details"});
+    res.send({"status":2000,"msg":"Hello Data Details data"});
 });
 module.exports=router;
