@@ -12,7 +12,7 @@ jobs:
     runs-on: self-hosted
     strategy:
       matrix:
-        node-version: [18.x] # Only use versions installed on EC2 runner
+        node-version: [23.x] # Only use versions installed on EC2 runner
     steps:
       - uses: actions/checkout@v4
 
