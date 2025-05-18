@@ -6,7 +6,7 @@ router.get("/",async(req,res)=>{
 });
 
 router.get("/getdata",async(req,res)=>{
-    res.send({"status":2000,"data":student});
+    res.send({"status":2000,"data":{"studnt":student}});
 });
 
 module.exports=router;
