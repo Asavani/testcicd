@@ -3,6 +3,8 @@ name: Node.js CI on Self-Hosted Runner
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -12,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Use Node.js via nvm
+      - name: Set up Node.js (via nvm)
         run: |
           export NVM_DIR="$HOME/.nvm"
           source "$NVM_DIR/nvm.sh"
@@ -27,6 +29,13 @@ jobs:
           source "$NVM_DIR/nvm.sh"
           nvm use 23
           npm ci
+
+      - name: Run background script
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm use 23
+          nohup ./run.sh > /actions-runner/runner.log 2>&1 & # Run in the background
 
       - name: Build (optional)
         run: |
