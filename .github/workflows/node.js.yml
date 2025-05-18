@@ -8,24 +8,38 @@ on:
 
 jobs:
   build:
-    name: Build & Test on EC2
+    name: Build & Restart on EC2
     runs-on: self-hosted
-    strategy:
-      matrix:
-        node-version: [23.x] # Only use versions installed on EC2 runner
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+      - name: Use Node.js via nvm
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm install 23
+          nvm use 23
+          node -v
+          npm -v
 
       - name: Install dependencies
-        run: npm ci
-
-     
-      - name: Restart PM2 (or your process manager)
         run: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm use 23
+          npm ci
+
+      - name: Build (optional)
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm use 23
+          npm run build || echo "No build script found"
+
+      - name: Restart PM2
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          source "$NVM_DIR/nvm.sh"
+          nvm use 23
           pm2 restart 0 || pm2 start npm --name "my-app" -- start
